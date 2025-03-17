@@ -1,0 +1,52 @@
+name: Deploy Hexo Site
+
+on:
+  push:
+    branches:
+      - main  # 触发分支，根据实际情况修改
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：检出源码仓库
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整的提交历史，某些Hexo插件可能需要
+
+      # 步骤2：设置Node.js环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # 根据你的需求调整版本
+
+      # 步骤3：缓存Node.js依赖，加速构建
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        env:
+          cache-name: node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      # 步骤4：安装Hexo及依赖
+      - name: Install Dependencies
+        run: |
+          npm install -g hexo-cli  # 全局安装Hexo命令行工具
+          npm install  # 安装项目依赖
+
+      # 步骤5：生成静态文件
+      - name: Generate Site
+        run: hexo generate  # 生成静态文件到public目录
+
+      # 步骤6：部署到目标仓库
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # 使用私钥认证
+          external_repository: winotmk/winotmk.github.io  # 目标仓库名称
+          publish_dir: ./public  # Hexo生成的静态文件目录
+          publish_branch: main  # 目标仓库的分支
+          user_name: winotmk  # 提交者信息（可选）
+          user_email: 5500330147@qq.com  # 提交者邮箱（可选）
