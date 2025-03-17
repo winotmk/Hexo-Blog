@@ -43,8 +43,7 @@ jobs:
 
       # 步骤4：安装Hexo及依赖
       - name: Install Dependencies
-        run: |
-          npm install -g hexo-cli  # 全局安装Hexo命令行工具
+        run: npm install -g hexo-cli  # 全局安装Hexo命令行工具
 
       # 步骤5：生成静态文件
       - name: Generate Site
