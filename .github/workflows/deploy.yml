@@ -18,6 +18,9 @@ jobs:
       - name: LS
         run: ls
 
+      - name: pwd
+        run: pwd
+
       - name: Set PATH
         run: echo "PATH=$PATH:/node_modules/.bin" >> $GITHUB_ENV
 
