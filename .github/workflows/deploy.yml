@@ -21,12 +21,32 @@ jobs:
       - name: pwd
         run: pwd
 
-      - name: Set PATH
-        run: echo "PATH=$PATH:/node_modules/.bin" >> $GITHUB_ENV
+      # 步骤2：设置Node.js环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # 根据你的需求调整版本
+      # 步骤3：缓存Node.js依赖，加速构建
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        env:
+          cache-name: node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Set PATH
+        run: echo "PATH=$PATH:/home/runner/work/Hexo-Blog/Hexo-Blog/node_modules/.bin" >> $GITHUB_ENV
+
+      - name: pwd
+        run: pwd
+        
       # 步骤5：生成静态文件
       - name: Generate Site
         run: hexo generate  # 生成静态文件到public目录
+
+      - name: LS
+        run: ls
 
       # 步骤6：部署到目标仓库
       - name: Deploy to GitHub Pages
