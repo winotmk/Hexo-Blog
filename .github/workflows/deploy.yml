@@ -15,26 +15,11 @@ jobs:
         with:
           fetch-depth: 0  # 获取完整的提交历史，某些Hexo插件可能需要
 
-      # 步骤2：设置Node.js环境
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'  # 根据你的需求调整版本
+      - name: LS
+        run: ls
 
-      # 步骤3：缓存Node.js依赖，加速构建
-      - name: Cache Node Modules
-        uses: actions/cache@v3
-        env:
-          cache-name: node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      # 步骤4：安装Hexo及依赖
-      - name: Install Dependencies
-        run: |
-          npm install -g hexo-cli  # 全局安装Hexo命令行工具
-          npm install  # 安装项目依赖
+      - name: Set PATH
+        run: echo "PATH=$PATH:/node_modules/.bin" >> $GITHUB_ENV
 
       # 步骤5：生成静态文件
       - name: Generate Site
