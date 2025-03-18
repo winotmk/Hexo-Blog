@@ -45,6 +45,13 @@ jobs:
       - name: Install Dependencies
         run: npm install -g hexo-cli  # 全局安装Hexo命令行工具
 
+      - name: npm fund
+        run: npm fund
+
+      - name: pwd & ls
+        run: pwd & ls
+        working-directory: ../
+
       # 步骤5：生成静态文件
       - name: Generate Site
         run: hexo generate  # 生成静态文件到public目录
