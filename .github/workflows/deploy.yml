@@ -12,8 +12,6 @@ jobs:
       # 步骤1：检出源码仓库
       - name: Checkout Source
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 获取完整的提交历史，某些Hexo插件可能需要
 
       - name: LS
         run: ls
@@ -35,16 +33,14 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Set PATH
-        run: echo "PATH=$PATH:/home/runner/work/Hexo-Blog/Hexo-Blog/node_modules/.bin" >> $GITHUB_ENV
+
 
       - name: pwd
         run: pwd
 
-
       - name: Install dependencies
         run: npm install
-        
+
       # 步骤4：安装Hexo及依赖
       - name: Install Dependencies
         run: npm install -g hexo-cli  # 全局安装Hexo命令行工具
