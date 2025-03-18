@@ -70,3 +70,5 @@ md文档的目录是`./hexo/Winblog/source/_posts`
 
 这次在尝试了disqus和waline后还是选择了waline，后者需要自己架设，虽然用得都是免费服务，但还就是比公共且需要梯子的disqus稳且快非常多
 ![2025-03-11-15-14-57](http://pictures.winotmk.com/WinNote/2025-03-11-15-14-57_91301dd5.png)
+
+测试一下新生成器是否有效
